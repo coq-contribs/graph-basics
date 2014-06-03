@@ -35,9 +35,9 @@ Inductive Arc : Set :=
 Lemma A_eq_dec : forall a b : Arc, {a = b} + {a <> b}.
 Proof.
         simple destruct a; simple destruct b; intros.
-        case (V_eq_dec v v1); intros.
-        case (V_eq_dec v0 v2); intros.
-        left; rewrite e; rewrite e0; trivial.
+        case (V_eq_dec v v1); intros H. 
+        case (V_eq_dec v0 v2); intros H0.
+        left; rewrite H; rewrite H0; trivial.
 
         right; injection; auto.
 

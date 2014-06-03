@@ -81,13 +81,13 @@ Proof.
         case (H x0); intros.
         left; apply V_in_right; trivial.
 
-        case (V_eq_dec x x0); intros.
-        left; apply V_in_left; rewrite e; apply V_in_single.
+        case (V_eq_dec x x0); intros H1. 
+        left; apply V_in_left; rewrite H1; apply V_in_single.
 
-        right; red in |- *; intros; inversion H0.
-        elim n1; inversion H1; trivial.
+        right; red in |- *; intros H2; inversion H2.
+        elim H1; inversion H3; trivial.
 
-        elim n0; trivial.
+        elim H0; trivial.
 
         auto.
 
@@ -108,13 +108,13 @@ Proof.
         case (H x0); intros.
         left; apply A_in_right; trivial.
 
-        case (A_eq_dec (A_ends x y) x0); intros.
-        left; apply A_in_left; rewrite e; apply A_in_single.
+        case (A_eq_dec (A_ends x y) x0); intros H1.
+        left; apply A_in_left; rewrite H1; apply A_in_single.
 
-        right; red in |- *; intros; inversion H0.
-        elim n1; inversion H1; trivial.
+        right; red in |- *; intros H2; inversion H2.
+        elim H1; inversion H3; trivial.
 
-        elim n0; trivial.
+        elim H0; trivial.
 
         case (H x); intros.
         left; elim e0; trivial.

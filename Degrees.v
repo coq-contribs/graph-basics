@@ -209,13 +209,13 @@ Proof.
 
         auto.
 
-        case (V_eq_dec x0 x); intros.
+        case (V_eq_dec x0 x) as [e|n2].
         absurd (A_union (E_set x y) a0 (A_ends x0 y)).
         auto.
 
         rewrite e; apply A_in_left; apply E_right.
 
-        case (V_eq_dec x0 y); intros.
+        case (V_eq_dec x0 y) as [e|n3].
         absurd (A_union (E_set x y) a0 (A_ends x0 x)).
         auto.
 
@@ -242,7 +242,7 @@ Proof.
 
         auto.
 
-        case (V_eq_dec x0 x); intros.
+        case (V_eq_dec x0 x) as [e|n2].
         rewrite (Degree_isolated v0 a0 d x0).
         trivial.
 
@@ -258,7 +258,7 @@ Proof.
 
         apply H2; apply A_in_right; trivial.
 
-        case (V_eq_dec x0 y); intros.
+        case (V_eq_dec x0 y) as [e|n3].
         rewrite (Degree_isolated v0 a0 d x0).
         trivial.
 
@@ -320,10 +320,10 @@ Proof.
 
         auto.
 
-        case (V_eq_dec x0 x); intros.
+        case (V_eq_dec x0 x) as [e|n2].
         apply gt_n_S; apply Degree_not_isolated.
         elim H0; rewrite e; intros.
-        case (V_eq_dec x1 y); intros.
+        case (V_eq_dec x1 y) as [e0|n3].
         elim H2; rewrite e0; intros.
         split with x2.
         apply (A_in_union_edge _ _ _ _ _ H3).
@@ -333,10 +333,10 @@ Proof.
         apply (A_in_union_edge _ _ _ _ _ H1).
         apply E_not_set_eq24; auto.
 
-        case (V_eq_dec x0 y); intros.
+        case (V_eq_dec x0 y) as [e|n3].
         apply gt_n_S; apply Degree_not_isolated.
         elim H0; rewrite e; intros.
-        case (V_eq_dec x x1); intros.
+        case (V_eq_dec x x1) as [e0|n3].
         elim H2; rewrite e0; intros.
         split with x2; apply (A_in_union_edge _ _ _ _ _ H3).
         apply E_not_set_eq14; trivial.

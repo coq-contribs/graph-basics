@@ -88,13 +88,13 @@ Proof.
         intros v a g; elim g; intros.
         right; apply V_empty_nothing.
 
-        case (H x0); intros.
+        case (H x0) as [|n0].
         left; apply V_in_right; trivial.
 
-        case (V_eq_dec x x0); intros.
+        case (V_eq_dec x x0) as [e|n1].
         left; apply V_in_left; rewrite e; apply V_in_single.
 
-        right; red in |- *; intros; inversion H0.
+        right; red in |- *; intros H0; inversion H0.
         elim n1; inversion H1; trivial.
 
         elim n0; trivial.
@@ -115,17 +115,17 @@ Proof.
 
         auto.
 
-        case (H x0); intros.
+        case (H x0) as [H0|n2].
         left; apply A_in_right; trivial.
 
-        case (A_eq_dec (A_ends x y) x0); intros.
+        case (A_eq_dec (A_ends x y) x0) as [e|n3].
         left; apply A_in_left; rewrite <- e; apply E_right; trivial.
 
-        case (A_eq_dec (A_ends y x) x0); intros.
-        left; apply A_in_left; rewrite <- e; apply E_left; trivial.
+        case (A_eq_dec (A_ends y x) x0) as [e0|n4].
+        left; apply A_in_left; rewrite <- e0; apply E_left; trivial.
 
-        right; red in |- *; intros; inversion H0.
-        inversion H1.
+        right; red in |- *; intros H3; inversion H3 as [? H0|].
+        inversion H0.
         elim n3; trivial.
 
         elim n4; trivial.
@@ -267,7 +267,7 @@ Proof.
 
         apply V_not_union; trivial.
 
-        case (G_a_dec v2 a2 H0 (A_ends x y)); intros.
+        case (G_a_dec v2 a2 H0 (A_ends x y)); intros H2.
         apply G_eq with (v := V_union v v2) (a := A_union a a2).
         trivial.
 
@@ -300,7 +300,7 @@ Proof.
         apply A_not_union.
         trivial.
 
-        red in |- *; intro; elim n2; apply (G_non_directed v2 a2 H0); trivial.
+        red in |- *; intro; elim H2; apply (G_non_directed v2 a2 H0); trivial.
 
         apply G_eq with (v := V_union v v2) (a := A_union a a2).
         elim e; trivial.
@@ -356,7 +356,7 @@ Proof.
 intros v a g; elim g; intros.
 elim (V_empty_nothing x); trivial.
 
-case (V_union_single_dec x x0 v0 n H0); intros.
+case (V_union_single_dec x x0 v0 n H0) as [e|v1].
 apply G_eq with (v := v0) (a := a0).
 apply V_union_inversion with (E := V_single x).
 apply V_single_disjoint; trivial.
@@ -467,16 +467,16 @@ unfold A_empty in |- *; tauto.
 
 intros; apply G_vertex; eauto 2.
 
-intros; case (E_set_eq_dec x x0 y y0); intros.
+intros; case (E_set_eq_dec x x0 y y0); intros H4.
 apply G_eq with (v := v0) (a := a0).
 trivial.
 
 apply (A_union_inversion (E_set x y) a0 a').
 apply E_set_disjoint; trivial.
 
-rewrite e; apply E_set_disjoint; trivial.
+rewrite H4; apply E_set_disjoint; trivial.
 
-rewrite <- e in H3; trivial.
+rewrite <- H4 in H3; trivial.
 
 trivial.
 
@@ -487,11 +487,11 @@ apply A_union_single_inter with (x' := x0) (y' := y0); trivial.
 
 apply G_edge.
 apply (H x0 y0).
-inversion H0.
+inversion H0 as [? H5 H6|? H5 H6].
 absurd (E_set x y = E_set x0 y0).
 trivial.
 
-inversion H4.
+inversion H5.
 trivial.
 
 apply E_set_eq.

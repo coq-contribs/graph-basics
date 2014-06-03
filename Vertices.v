@@ -34,8 +34,8 @@ Inductive Vertex : Set :=
 Lemma V_eq_dec : forall x y : Vertex, {x = y} + {x <> y}.
 Proof.
         simple destruct x; simple destruct y; intros.
-        case (eq_nat_dec n n0); intros.
-        left; rewrite e; trivial.
+        case (eq_nat_dec n n0); intros H.
+        left; rewrite H; trivial.
 
         right; injection; trivial.
 Qed.
@@ -150,11 +150,11 @@ Lemma V_union_single_dec :
  forall (x y : Vertex) (v : V_set),
  ~ v x -> V_union (V_single x) v y -> {x = y} + {v y}.
 Proof.
-        intros; case (V_eq_dec x y); intros.
+        intros; case (V_eq_dec x y); intros H1.
         left; trivial.
 
         right; inversion H0.
-        elim n; inversion H1; trivial.
+        elim H1; inversion H2; trivial.
 
         trivial.
 Qed.

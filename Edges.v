@@ -97,17 +97,17 @@ Lemma E_set_eq_dec :
  forall x x' y y' : Vertex,
  {E_set x y = E_set x' y'} + {E_set x y <> E_set x' y'}.
 Proof.
-        intros; case (V_eq_dec x x'); intros.
-        case (V_eq_dec y y'); intros.
-        left; rewrite e; rewrite e0; trivial.
+        intros; case (V_eq_dec x x') as [->|].
+        case (V_eq_dec y y') as [->|].
+        left; trivial.
 
         right; apply E_set_eq_diff; trivial.
 
-        case (V_eq_dec x y'); intros.
-        case (V_eq_dec y x'); intros.
-        left; rewrite e; rewrite e0; apply E_set_eq.
+        case (V_eq_dec x y') as [->|].
+        case (V_eq_dec y x') as [->|].
+        left; apply E_set_eq.
 
-        right; rewrite (E_set_eq x y); apply E_set_diff_eq; trivial.
+        right; rewrite (E_set_eq y' y); apply E_set_diff_eq; trivial.
 
         right; apply E_set_diff1; trivial.
 Qed.
@@ -160,28 +160,21 @@ Definition E_nil := nil (A:=Edge).
 Lemma E_eq_dec : forall u v : Edge, {E_eq u v} + {~ E_eq u v}.
 Proof.
         simple destruct u; intros a b; simple destruct v; intros c d.
-        case (V_eq_dec a c); intros.
-        case (V_eq_dec b d); intros.
-        left; rewrite e; rewrite e0; apply E_refl.
+        case (V_eq_dec a c) as [->|H].
+        case (V_eq_dec b d) as [->|H].
+        left; apply E_refl.
 
-        right; red in |- *; intros; inversion H.
-        elim n; trivial.
+        right; intros H0; inversion H0; subst; elim H; trivial.
 
-        elim n; rewrite H3; rewrite <- H4; auto.
+        case (V_eq_dec a d) as [->|H0].
+        case (V_eq_dec b c) as [->|H0].
+        left; apply E_rev.
 
-        case (V_eq_dec a d); intros.
-        case (V_eq_dec b c); intros.
-        left; rewrite e; rewrite e0; apply E_rev.
+        right; intros H1; inversion H1; subst; elim H0; trivial.
 
-        right; red in |- *; intros; inversion H.
-        elim n; trivial.
-
-        elim n0; trivial.
-
-        right; red in |- *; intros; inversion H.
-        elim n; trivial.
-
-        elim n0; trivial.
+        right; intros H1; inversion H1; subst.
+        elim H; trivial.
+        elim H0; trivial.
 Qed.
 
 Fixpoint E_in (u : Edge) (l : E_list) {struct l} : Prop :=

@@ -49,16 +49,16 @@ Proof.
         simple induction ul; intros.
         right; red in |- *; intros; inversion H.
 
-        case (U_separable x a); intros.
-        left; rewrite e; simpl in |- *; auto.
+        case (U_separable x a); intros H0.
+        left; simpl in |- *; info_auto.
 
-        case H; intros.
+        case H; intros H1.
         left; simpl in |- *; auto.
 
-        right; red in |- *; intros; inversion H0.
-        elim n; auto.
+        right; red in |- *; intros H2; inversion H2.
+        elim H0; auto.
 
-        elim n0; auto.
+        elim H1; auto.
 Qed.
 
 Variable f : U -> nat.

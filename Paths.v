@@ -248,11 +248,11 @@ Proof.
 
         elim H; clear H; intros vl' H.
         elim H; clear H; intros el' H.
-        case (V_in_dec x0 (y0 :: vl')); intros.
+        case (V_in_dec x0 (y0 :: vl')) as [i|n].
         elim (P_extract _ _ _ _ _ H i); intros.
         split with (V_extract x0 (y0 :: vl')); split with x1; auto.
 
-        case (V_in_dec y0 vl'); intros.
+        case (V_in_dec y0 vl') as [e|n0].
         split with (y0 :: V_nil); split with (E_ends x0 y0 :: E_nil). apply P_step.
         replace z with y0.
         apply P_null; apply (P_endx_inv _ _ _ _ _ _ H).
@@ -388,7 +388,7 @@ Lemma Cycle_degree_two :
  forall (x y : Vertex) (vl : V_list) (el : E_list) (p : Path v a x y vl el),
  Cycle v a x y vl el p -> forall z : Vertex, In z vl -> degree z v a g > 1.
 Proof.
-        intros; case (V_eq_dec z y); intros.
+        intros; case (V_eq_dec z y) as [e|n].
         rewrite e; apply Degree_not_pendant.
         inversion p.
         rewrite <- H4 in H0; inversion H0.
@@ -789,7 +789,7 @@ Proof.
         elim g; intros.
         inversion H.
 
-        case (V_eq_dec x x0); intros.
+        case (V_eq_dec x x0) as [e|n0].
         rewrite e; apply V_in_left; apply V_in_single.
 
         apply V_in_right; apply (H x0 y); trivial.

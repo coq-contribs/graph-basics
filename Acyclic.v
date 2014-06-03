@@ -153,7 +153,7 @@ Proof.
 
         inversion H2.
 
-        case (V_in_dec x (x0 :: vl)); intros.
+        case (V_in_dec x (x0 :: vl)) as [e|n0].
         apply
          (Path_degree_zero_nil (V_union (V_single x) v0) a0
             (Acyclic_Isa_Graph (V_union (V_single x) v0) a0
@@ -174,7 +174,7 @@ Proof.
 
         red in |- *; intros; elim n0; simpl in |- *; auto.
 
-        case (V_in_dec y (x0 :: vl)); intros.
+        case (V_in_dec y (x0 :: vl)) as [e|n0].
         apply
          (Cycle_degree_one_nil (V_union (V_single y) v0)
             (A_union (E_set x y) a0)

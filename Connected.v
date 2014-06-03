@@ -146,13 +146,13 @@ Proof.
         apply W_null.
         apply V_in_single.
 
-        case (V_union_single_dec _ _ _ n H0);
-         case (V_union_single_dec _ _ _ n H1); intros.
+        case (V_union_single_dec _ _ _ n H0) as [e|v2];
+         case (V_union_single_dec _ _ _ n H1) as [e0|v3].
         split with V_nil; split with E_nil.
         rewrite <- e; rewrite <- e0; apply W_null.
         apply V_in_left; apply V_in_single.
 
-        elim (H x y0 v1 v2); intros.
+        elim (H x y0 v1 v3); intros.
         split with (x :: x1); elim p; intros.
         split with (E_ends y x :: x2); rewrite <- e; apply W_step.
         apply
@@ -179,13 +179,12 @@ Proof.
 
         apply W_step.
         apply W_null.
-        rewrite e; apply V_in_left; apply V_in_single.
+        rewrite e0; apply V_in_left; apply V_in_single.
 
         apply V_in_right; trivial.
+        rewrite e0; apply A_in_left; apply E_right.
 
-        rewrite e; apply A_in_left; apply E_right.
-
-        elim (H x0 y0 v3 v2); intros.
+        elim (H x0 y0 v2 v3); intros.
         split with x1; elim p; intros.
         split with x2;
          apply
@@ -233,7 +232,7 @@ Proof.
         intros v a c; elim c; intros.
         inversion H; auto.
 
-        case (V_union_single_dec _ _ _ n H0); intros.
+        case (V_union_single_dec _ _ _ n H0) as [e|v2].
         elim (H1 x); rewrite e; apply A_in_left; apply E_left.
 
         generalize (A_not_in_union _ _ _ H1); intros.
@@ -331,7 +330,7 @@ Proof.
         elim (A_empty_nothing (A_ends x0 y)).
         fold A_empty in |- *; rewrite H6; apply A_in_left; apply E_right.
 
-        case (V_union_single_dec _ _ _ n H1); intros.
+        case (V_union_single_dec _ _ _ n H1) as [e|v2].
         apply C_eq with (v := v0) (a := a0).
         apply (V_union_inversion (V_single y)).
         apply V_single_disjoint; trivial.
@@ -359,7 +358,7 @@ Proof.
 
         trivial.
 
-        case (V_union_single_dec _ _ _ n H0); intros.
+        case (V_union_single_dec _ _ _ n H0) as [e|v3].
         rewrite <- e in H2;
          generalize (C_pendant_isolated _ _ co x y y0 n H2); 
          intros.
@@ -448,7 +447,7 @@ Proof.
         apply V_in_inter.
         trivial.
 
-        case (V_union_single_dec y0 x v'); intros.
+        case (V_union_single_dec y0 x v') as [e|v4].
         trivial.
 
         rewrite <- H4; apply V_in_right; trivial.
