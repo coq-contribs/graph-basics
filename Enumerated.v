@@ -47,15 +47,15 @@ Inductive U_canon : U_list -> Prop :=
 Lemma U_in_dec : forall (x : U) (ul : U_list), {In x ul} + {~ In x ul}.
 Proof.
         simple induction ul; intros.
-        right; red in |- *; intros; inversion H.
+        right; red; intros; inversion H.
 
         case (U_separable x a); intros H0.
-        left; simpl in |- *; info_auto.
+        left; simpl; info_auto.
 
         case H; intros H1.
-        left; simpl in |- *; auto.
+        left; simpl; auto.
 
-        right; red in |- *; intros H2; inversion H2.
+        right; red; intros H2; inversion H2.
         elim H0; auto.
 
         elim H1; auto.

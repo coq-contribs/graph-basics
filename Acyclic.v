@@ -49,11 +49,11 @@ Proof.
 
         apply V_in_left; apply V_in_single.
 
-        red in |- *; intros Heq; elim n; rewrite <- Heq; trivial.
+        red; intros Heq; elim n; rewrite <- Heq; trivial.
 
-        red in |- *; intros; elim n; apply (G_ina_inv2 v0 a0 H x y); trivial.
+        red; intros; elim n; apply (G_ina_inv2 v0 a0 H x y); trivial.
 
-        red in |- *; intros; elim n; apply (G_ina_inv1 v0 a0 H y x); trivial.
+        red; intros; elim n; apply (G_ina_inv1 v0 a0 H y x); trivial.
 
         apply G_eq with (v := v0) (a := a0); trivial.
 Defined.
@@ -86,7 +86,7 @@ Remark AC_vertex_isolated :
  ~ v x ->
  Acyclic (V_union (V_single x) v) a -> forall y : Vertex, ~ a (A_ends x y).
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         elim H0; apply (AC_ina_inv1 v a x y); trivial.
 Qed.
 
@@ -95,8 +95,8 @@ Lemma AC_vertex_degree_zero :
  degree x (V_union (V_single x) v) a
    (Acyclic_Isa_Graph (V_union (V_single x) v) a (AC_vertex v a ac x Hn)) = 0.
 Proof.
-        intros; apply Degree_isolated; unfold isolated in |- *.
-        red in |- *; intros; elim Hn.
+        intros; apply Degree_isolated; unfold isolated.
+        red; intros; elim Hn.
         apply AC_ina_inv1 with (a := a) (y := y); trivial.
 Qed.
 
@@ -124,7 +124,7 @@ Lemma AC_edge_degree_one :
    (Acyclic_Isa_Graph (V_union (V_single y) v) (A_union (E_set x y) a)
       (AC_leaf v a ac x y Hp Hn)) = 1.
 Proof.
-        intros; apply Degree_pendant; unfold pendant in |- *.
+        intros; apply Degree_pendant; unfold pendant.
         split with x.
         apply A_in_left; apply E_left.
 
@@ -170,9 +170,9 @@ Proof.
         apply Path_supergraph_cons_vertex with (z := x).
         trivial.
 
-        red in |- *; intros; elim n0; simpl in |- *; auto.
+        red; intros; elim n0; simpl; auto.
 
-        red in |- *; intros; elim n0; simpl in |- *; auto.
+        red; intros; elim n0; simpl; auto.
 
         case (V_in_dec y (x0 :: vl)) as [e|n0].
         apply
@@ -195,15 +195,15 @@ Proof.
         apply Path_supergraph_cons_vertex with (z := y).
         trivial.
 
-        red in |- *; intros; elim n0; simpl in |- *; auto.
+        red; intros; elim n0; simpl; auto.
 
-        red in |- *; intros; elim n0; simpl in |- *; auto.
+        red; intros; elim n0; simpl; auto.
 
-        red in |- *; intros; elim n0;
+        red; intros; elim n0;
          apply (P_inxyel_inyvl _ _ _ _ _ _ p x y); 
          trivial.
 
-        red in |- *; intros; elim n0;
+        red; intros; elim n0;
          apply (P_inxyel_inxvl _ _ _ _ _ _ p y x); 
          trivial.
 

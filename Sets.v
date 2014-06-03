@@ -56,7 +56,7 @@ Qed.
 
 Lemma U_set_diff_commut : forall E F : U_set, E <> F -> F <> E.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         elim H; apply U_set_eq_commut; trivial.
 Qed.
 
@@ -89,7 +89,7 @@ Qed.
 
 Lemma U_set_diff : forall E F : U_set, (exists x : U, E x /\ ~ F x) -> E <> F.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         elim H; intros.
         elim H1; intros.
         elim H3; rewrite <- H0; auto.
@@ -102,7 +102,7 @@ Definition Included (E F : U_set) : Prop := forall x : U, E x -> F x.
 Lemma Included_single :
  forall (E : U_set) (x : U), E x -> Included (Single x) E.
 Proof.
-        unfold Included in |- *; intros.
+        unfold Included; intros.
         inversion H0; rewrite <- H1; trivial.
 Qed.
 
@@ -164,7 +164,7 @@ Qed.
 Lemma Not_union :
  forall (E1 E2 : U_set) (x : U), ~ E1 x -> ~ E2 x -> ~ Union E1 E2 x.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         inversion H1.
         elim H; trivial.
 
@@ -189,7 +189,7 @@ Qed.
 
 Lemma Included_union : forall E F : U_set, Included E (Union E F).
 Proof.
-        unfold Included in |- *; intros.
+        unfold Included; intros.
         apply In_left; trivial.
 Qed.
 
@@ -257,14 +257,14 @@ Qed.
 
 Lemma Not_inter : forall (E1 E2 : U_set) (x : U), ~ E1 x -> ~ Inter E1 E2 x.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         inversion H0.
         elim H; trivial.
 Qed.
 
 Lemma Included_inter : forall E F : U_set, Included (Inter E F) E.
 Proof.
-        unfold Included in |- *; intros.
+        unfold Included; intros.
         inversion H; trivial.
 Qed.
 
@@ -434,7 +434,7 @@ Lemma Single_single_disjoint :
  forall x y : U, x <> y -> Inter (Single x) (Single y) = Empty.
 Proof.
         intros; apply Single_disjoint.
-        red in |- *; intros H0; elim H; inversion H0; trivial.
+        red; intros H0; elim H; inversion H0; trivial.
 Qed.
 
 Lemma Union_single_single :
@@ -442,7 +442,7 @@ Lemma Union_single_single :
  x <> y ->
  ~ e y -> Union (Single x) (Single y) = Union (Single y) e -> e = Single x.
 Proof.
-        intros; symmetry  in |- *; apply (Union_inversion (Single y)).
+        intros; symmetry ; apply (Union_inversion (Single y)).
         apply Single_single_disjoint; auto.
 
         apply Single_disjoint; trivial.

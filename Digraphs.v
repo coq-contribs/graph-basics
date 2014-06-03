@@ -84,7 +84,7 @@ Proof.
         case (V_eq_dec x x0); intros H1. 
         left; apply V_in_left; rewrite H1; apply V_in_single.
 
-        right; red in |- *; intros H2; inversion H2.
+        right; red; intros H2; inversion H2.
         elim H1; inversion H3; trivial.
 
         elim H0; trivial.
@@ -111,7 +111,7 @@ Proof.
         case (A_eq_dec (A_ends x y) x0); intros H1.
         left; apply A_in_left; rewrite H1; apply A_in_single.
 
-        right; red in |- *; intros H2; inversion H2.
+        right; red; intros H2; inversion H2.
         elim H1; inversion H3; trivial.
 
         elim H0; trivial.
@@ -132,9 +132,9 @@ Lemma D_union :
 Proof.
         intros; elim H; intros.
         apply D_eq with (v := v2) (a := a2).
-        symmetry  in |- *; apply V_union_neutral.
+        symmetry ; apply V_union_neutral.
 
-        symmetry  in |- *; apply A_union_neutral.
+        symmetry ; apply A_union_neutral.
 
         trivial.
 
@@ -150,7 +150,7 @@ Proof.
         apply
          D_eq
           with (v := V_union (V_single x) (V_union v v2)) (a := A_union a a2).
-        symmetry  in |- *; apply V_union_assoc.
+        symmetry ; apply V_union_assoc.
 
         trivial.
 
@@ -177,7 +177,7 @@ Proof.
             (a := A_union (A_single (A_ends x y)) (A_union a a2)).
         trivial.
 
-        symmetry  in |- *; apply A_union_assoc.
+        symmetry ; apply A_union_assoc.
 
         apply D_arc.
         trivial.

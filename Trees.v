@@ -41,7 +41,7 @@ Proof.
         apply G_vertex.
         apply G_empty.
 
-        compute in |- *. tauto.
+        compute. tauto.
 
         apply G_edge.
         apply G_vertex; trivial.
@@ -50,12 +50,12 @@ Proof.
 
         apply V_in_left; apply V_in_single.
 
-        red in |- *; intros He; elim n0.
+        red; intros He; elim n0.
         rewrite <- He; trivial.
 
-        red in |- *; intro; elim n0; apply (G_ina_inv2 v0 a0 H n f); trivial.
+        red; intro; elim n0; apply (G_ina_inv2 v0 a0 H n f); trivial.
 
-        red in |- *; intro; elim n0; apply (G_ina_inv1 v0 a0 H f n); trivial.
+        red; intro; elim n0; apply (G_ina_inv1 v0 a0 H f n); trivial.
 
         apply G_eq with (v := v0) (a := a0); trivial.
 Defined.
@@ -83,7 +83,7 @@ Proof.
         apply AC_vertex.
         apply AC_empty.
 
-        compute in |- *. tauto.
+        compute. tauto.
 
         apply AC_leaf; auto.
 
@@ -101,16 +101,16 @@ Proof.
         elim (Connected_not_empty _ _ H); auto.
 
         apply T_eq with (v := V_single x) (a := A_empty).
-        symmetry  in |- *; apply (C_minus_isolated_left _ _ H0 x).
+        symmetry ; apply (C_minus_isolated_left _ _ H0 x).
         apply V_in_left; apply V_in_single.
 
-        intros; red in |- *; intros; elim n.
+        intros; red; intros; elim n.
         apply (AC_ina_inv1 _ _ _ _ ac0 H1).
 
-        symmetry  in |- *; apply (C_minus_isolated_right _ _ H0 x).
+        symmetry ; apply (C_minus_isolated_right _ _ H0 x).
         apply V_in_left; apply V_in_single.
 
-        intros; red in |- *; intros; elim n.
+        intros; red; intros; elim n.
         apply (AC_ina_inv1 _ _ _ _ ac0 H1).
 
         apply T_root.
@@ -132,9 +132,9 @@ Proof.
 
         trivial.
 
-        red in |- *; intros H1; elim n; apply (AC_ina_inv2 _ _ x y ac0 H1).
+        red; intros H1; elim n; apply (AC_ina_inv2 _ _ x y ac0 H1).
 
-        red in |- *; intros H1; elim n; apply (AC_ina_inv1 _ _ y x ac0 H1).
+        red; intros H1; elim n; apply (AC_ina_inv1 _ _ y x ac0 H1).
 
         trivial.
 

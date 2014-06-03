@@ -182,7 +182,7 @@ Lemma A_not_in_union :
  (forall y : Vertex, ~ A_union a' a (A_ends x y)) ->
  forall y : Vertex, ~ a (A_ends x y).
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         elim (H y); apply A_in_right; trivial.
 Qed.
 

@@ -94,7 +94,7 @@ Proof.
         case (V_eq_dec x x0) as [e|n1].
         left; apply V_in_left; rewrite e; apply V_in_single.
 
-        right; red in |- *; intros H0; inversion H0.
+        right; red; intros H0; inversion H0.
         elim n1; inversion H1; trivial.
 
         elim n0; trivial.
@@ -124,7 +124,7 @@ Proof.
         case (A_eq_dec (A_ends y x) x0) as [e0|n4].
         left; apply A_in_left; rewrite <- e0; apply E_left; trivial.
 
-        right; red in |- *; intros H3; inversion H3 as [? H0|].
+        right; red; intros H3; inversion H3 as [? H0|].
         inversion H0.
         elim n3; trivial.
 
@@ -212,7 +212,7 @@ Proof.
             (A_union (E_set x y) a0)).
         trivial.
 
-        symmetry  in |- *; apply E_add_edge.
+        symmetry ; apply E_add_edge.
 
         apply D_arc.
         apply D_arc; auto.
@@ -221,7 +221,7 @@ Proof.
 
         trivial.
 
-        red in |- *; intros; inversion_clear H0.
+        red; intros; inversion_clear H0.
         inversion H1.
         elim n; auto.
 
@@ -240,9 +240,9 @@ Lemma G_union :
 Proof.
         intros; elim H; intros.
         apply G_eq with (v := v2) (a := a2).
-        symmetry  in |- *; apply V_union_neutral.
+        symmetry ; apply V_union_neutral.
 
-        symmetry  in |- *; apply A_union_neutral.
+        symmetry ; apply A_union_neutral.
 
         trivial.
 
@@ -258,7 +258,7 @@ Proof.
         apply
          G_eq
           with (v := V_union (V_single x) (V_union v v2)) (a := A_union a a2).
-        symmetry  in |- *; apply V_union_assoc.
+        symmetry ; apply V_union_assoc.
 
         trivial.
 
@@ -284,7 +284,7 @@ Proof.
           with (v := V_union v v2) (a := A_union (E_set x y) (A_union a a2)).
         trivial.
 
-        symmetry  in |- *; apply A_union_assoc.
+        symmetry ; apply A_union_assoc.
 
         apply G_edge.
         trivial.
@@ -300,7 +300,7 @@ Proof.
         apply A_not_union.
         trivial.
 
-        red in |- *; intro; elim H2; apply (G_non_directed v2 a2 H0); trivial.
+        red; intro; elim H2; apply (G_non_directed v2 a2 H0); trivial.
 
         apply G_eq with (v := V_union v v2) (a := A_union a a2).
         elim e; trivial.
@@ -320,10 +320,10 @@ Proof.
         intros v a g; elim g; intros.
         trivial.
 
-        elim (V_empty_nothing x); fold V_empty in |- *; rewrite <- H0;
+        elim (V_empty_nothing x); fold V_empty; rewrite <- H0;
          apply V_in_left; apply V_in_single.
 
-        elim (V_empty_nothing x); fold V_empty in |- *; rewrite <- H0;
+        elim (V_empty_nothing x); fold V_empty; rewrite <- H0;
          trivial.
 
         rewrite <- e0; apply H; rewrite e; trivial.
@@ -337,7 +337,7 @@ Lemma V_union_single_inter :
  V_union (V_single x) (V_inter v v') = v'.
 Proof.
         intros; rewrite V_distributivity_union_inter.
-        fold V_union in |- *; rewrite H1;
+        fold V_union; rewrite H1;
          rewrite (V_union_commut (V_single x));
          rewrite (V_union_commut (V_single y));
          rewrite <- V_distributivity_union_inter.
@@ -363,7 +363,7 @@ apply V_single_disjoint; trivial.
 
 apply V_single_disjoint; rewrite e; trivial.
 
-pattern x at 2 in |- *; rewrite e; trivial.
+pattern x at 2; rewrite e; trivial.
 
 trivial.
 
@@ -374,7 +374,7 @@ apply G_eq with (v := V_union (V_single x) (V_inter v0 v')) (a := a0).
 apply (V_union_single_inter x x0).
 trivial.
 
-red in |- *; intros Heq; elim n; rewrite Heq; trivial.
+red; intros Heq; elim n; rewrite Heq; trivial.
 
 trivial.
 
@@ -382,13 +382,13 @@ trivial.
 
 apply G_vertex.
 apply H4.
-unfold V_inter in |- *.
+unfold V_inter.
 rewrite (V_inter_commut v0 v'); apply V_not_inter; trivial.
 
-rewrite V_inter_commut; symmetry  in |- *; apply (V_union_single_inter x0 x).
+rewrite V_inter_commut; symmetry ; apply (V_union_single_inter x0 x).
 trivial.
 
-red in |- *; intros Heq; elim n; rewrite <- Heq; trivial.
+red; intros Heq; elim n; rewrite <- Heq; trivial.
 
 auto.
 
@@ -398,7 +398,7 @@ apply G_edge.
 apply (H x0).
 trivial.
 
-red in |- *; intros; elim (H1 y0).
+red; intros; elim (H1 y0).
 apply A_in_right; trivial.
 
 trivial.
@@ -445,7 +445,7 @@ Lemma A_union_single_inter :
  A_union (E_set x y) (A_inter a a') = a'.
 Proof.
         intros; rewrite A_distributivity_union_inter.
-        fold A_union in |- *; rewrite H2;
+        fold A_union; rewrite H2;
          rewrite (A_union_commut (E_set x y));
          rewrite (A_union_commut (E_set x' y'));
          rewrite <- A_distributivity_union_inter.
@@ -463,7 +463,7 @@ Lemma G_minus_edge :
  ~ a' (A_ends y x) -> a = A_union (E_set x y) a' -> Graph v a'.
 Proof.
 intros v a g; elim g.
-unfold A_empty in |- *; tauto.
+unfold A_empty; tauto.
 
 intros; apply G_vertex; eauto 2.
 
@@ -498,11 +498,11 @@ apply E_set_eq.
 
 trivial.
 
-red in |- *; intros Ha; inversion Ha; elim H1; trivial.
+red; intros Ha; inversion Ha; elim H1; trivial.
 
-red in |- *; intros Ha; inversion Ha; elim H2; trivial.
+red; intros Ha; inversion Ha; elim H2; trivial.
 
-rewrite A_inter_commut; symmetry  in |- *;
+rewrite A_inter_commut; symmetry ;
  apply A_union_single_inter with (x' := x) (y' := y).
 trivial.
 
@@ -518,9 +518,9 @@ trivial.
 
 trivial.
 
-red in |- *; intros Ha; inversion Ha; elim n0; trivial.
+red; intros Ha; inversion Ha; elim n0; trivial.
 
-red in |- *; intros Ha; inversion Ha; elim n1; trivial.
+red; intros Ha; inversion Ha; elim n1; trivial.
 
 intros.
 apply G_eq with (v := v0) (a := a'0).

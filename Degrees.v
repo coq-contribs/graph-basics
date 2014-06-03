@@ -47,14 +47,14 @@ Definition Neighbor (x y : Vertex) := A_included (E_set x y) a.
 Lemma neighbor_in_neighbor :
  forall x y : Vertex, Neighbor x y -> In_neighbor x y.
 Proof.
-        unfold Neighbor, A_included, Included, In_neighbor in |- *; intros.
+        unfold Neighbor, A_included, Included, In_neighbor; intros.
         apply H; apply E_left.
 Qed.
 
 Lemma neighbor_out_neighbor :
  forall x y : Vertex, Neighbor x y -> Out_neighbor x y.
 Proof.
-        unfold Neighbor, A_included, Included, Out_neighbor in |- *; intros.
+        unfold Neighbor, A_included, Included, Out_neighbor; intros.
         apply H; apply E_right.
 Qed.
 
@@ -62,7 +62,7 @@ Lemma In_and_out_neighbor :
  forall x y : Vertex, In_neighbor x y -> Out_neighbor x y -> Neighbor x y.
 Proof.
         unfold Neighbor, A_included, Included, In_neighbor, Out_neighbor
-         in |- *; intros.
+        ; intros.
         inversion H1; auto.
 Qed.
 
@@ -125,7 +125,7 @@ Lemma In_degree_neighborhood :
  forall (x : Vertex) (v : V_set) (a : A_set) (d : Digraph v a),
  In_degree x v a d = length (In_neighborhood x v a d).
 Proof.
-        simple induction d; simpl in |- *; intros.
+        simple induction d; simpl; intros.
         trivial.
 
         trivial.
@@ -151,7 +151,7 @@ Lemma Out_degree_neighborhood :
  forall (x : Vertex) (v : V_set) (a : A_set) (d : Digraph v a),
  Out_degree x v a d = length (Out_neighborhood x v a d).
 Proof.
-        simple induction d; simpl in |- *; intros.
+        simple induction d; simpl; intros.
         trivial.
 
         trivial.
@@ -180,7 +180,7 @@ Lemma Degree_neighborhood :
  forall (x : Vertex) (v : V_set) (a : A_set) (g : Graph v a),
  degree x v a g = length (neighborhood x v a g).
 Proof.
-        simple induction g; simpl in |- *; intros.
+        simple induction g; simpl; intros.
         trivial.
 
         trivial.
@@ -204,7 +204,7 @@ Lemma Degree_isolated :
  forall (v : V_set) (a : A_set) (g : Graph v a) (x : Vertex),
  isolated x v a g -> degree x v a g = 0.
 Proof.
-        unfold isolated in |- *; simple induction g; simpl in |- *; intros.
+        unfold isolated; simple induction g; simpl; intros.
         trivial.
 
         auto.
@@ -221,7 +221,7 @@ Proof.
 
         rewrite e; apply A_in_left; apply E_left.
 
-        apply (H x0); red in |- *; intros.
+        apply (H x0); red; intros.
         elim (H0 y0); apply A_in_right; trivial.
 
         apply (H x); rewrite e0; trivial.
@@ -236,7 +236,7 @@ Lemma Degree_pendant :
  forall (v : V_set) (a : A_set) (g : Graph v a) (x : Vertex),
  pendant x v a g -> degree x v a g = 1.
 Proof.
-        unfold pendant in |- *; simple induction g; simpl in |- *; intros.
+        unfold pendant; simple induction g; simpl; intros.
         elim H; intros.
         inversion H0.
 
@@ -247,11 +247,11 @@ Proof.
         trivial.
 
         elim H0; rewrite e; intros.
-        unfold isolated in |- *; red in |- *; intros.
+        unfold isolated; red; intros.
         absurd (y0 = x1).
-        red in |- *; intros.
+        red; intros.
         absurd (y = x1).
-        red in |- *; intros; elim n0.
+        red; intros; elim n0.
         rewrite H5; rewrite <- H4; trivial.
 
         apply H2; apply A_in_left; apply E_right.
@@ -263,11 +263,11 @@ Proof.
         trivial.
 
         elim H0; rewrite e; intros.
-        unfold isolated in |- *; red in |- *; intros.
+        unfold isolated; red; intros.
         absurd (y0 = x1).
-        red in |- *; intros.
+        red; intros.
         absurd (x = x1).
-        red in |- *; intros; elim n1.
+        red; intros; elim n1.
         rewrite H5; rewrite <- H4; trivial.
 
         apply H2; apply A_in_left; apply E_left.
@@ -288,7 +288,7 @@ Lemma Degree_not_isolated :
  forall (v : V_set) (a : A_set) (g : Graph v a) (x : Vertex),
  (exists y : Vertex, a (A_ends x y)) -> degree x v a g > 0.
 Proof.
-        simple induction g; simpl in |- *; intros.
+        simple induction g; simpl; intros.
         elim H; intros.
         inversion H0.
 
@@ -314,7 +314,7 @@ Lemma Degree_not_pendant :
     a (A_ends x y) & (exists2 z : Vertex, a (A_ends x z) & y <> z)) ->
  degree x v a g > 1.
 Proof.
-        simple induction g; simpl in |- *; intros.
+        simple induction g; simpl; intros.
         elim H; intros.
         inversion H0.
 

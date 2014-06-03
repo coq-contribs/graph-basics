@@ -45,9 +45,9 @@ Qed.
 Lemma E_set_diff1 :
  forall x x' y y' : Vertex, x <> x' -> x <> y' -> E_set x y <> E_set x' y'.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         absurd (E_set x y (A_ends x' y')).
-        red in |- *; intros; inversion H2.
+        red; intros; inversion H2.
         elim H; trivial.
 
         elim H0; trivial.
@@ -76,9 +76,9 @@ Qed.
 Lemma E_set_eq_diff :
  forall x x' y y' : Vertex, x = x' -> y <> y' -> E_set x y <> E_set x' y'.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         absurd (E_set x y (A_ends x' y')).
-        red in |- *; intros; inversion H2.
+        red; intros; inversion H2.
         elim H0; trivial.
 
         elim H0; rewrite H4; rewrite <- H5; auto.
@@ -115,7 +115,7 @@ Qed.
 Lemma E_not_set_eq123 :
  forall x y z t : Vertex, x <> z -> y <> z -> ~ E_set x y (A_ends z t).
 Proof.
-        red in |- *; intros.
+        red; intros.
         inversion H1.
         elim H; trivial.
 
@@ -125,7 +125,7 @@ Qed.
 Lemma E_not_set_eq14 :
  forall x y z : Vertex, x <> z -> ~ E_set x y (A_ends y z).
 Proof.
-        red in |- *; intros.
+        red; intros.
         inversion H0.
         elim H; rewrite H2; trivial.
 
@@ -135,7 +135,7 @@ Qed.
 Lemma E_not_set_eq24 :
  forall x y z : Vertex, y <> z -> ~ E_set x y (A_ends x z).
 Proof.
-        red in |- *; intros.
+        red; intros.
         inversion H0.
         elim H; trivial.
 
@@ -217,7 +217,7 @@ Lemma E_inclusion :
  forall (a : A_set) (x y : Vertex),
  a (A_ends x y) -> a (A_ends y x) -> A_included (E_set x y) a.
 Proof.
-        unfold A_included, Included in |- *; intros.
+        unfold A_included, Included; intros.
         inversion H1; auto.
 Qed.
 

@@ -82,9 +82,9 @@ Proof.
         absurd (V_nil = V_nil); auto.
 
         inversion p0.
-        simpl in |- *; auto.
+        simpl; auto.
 
-        rewrite H10; simpl in |- *; right.
+        rewrite H10; simpl; right.
         apply H; rewrite <- H10; discriminate.
 Qed.
 
@@ -138,9 +138,9 @@ Proof.
 
         inversion H0.
         inversion H1.
-        simpl in |- *; auto.
+        simpl; auto.
 
-        simpl in |- *; right.
+        simpl; right.
         apply (H x' y'); auto.
 Qed.
 
@@ -154,9 +154,9 @@ Proof.
 
         inversion H0.
         inversion H1.
-        simpl in |- *; auto.
+        simpl; auto.
 
-        simpl in |- *; right.
+        simpl; right.
         apply (H x' y'); auto.
 Qed.
 
@@ -207,7 +207,7 @@ Lemma P_extract :
  Path v a y z vl el ->
  In x (y :: vl) -> {el' : E_list &  Path v a x z (V_extract x (y :: vl)) el'}.
 Proof.
-        intros x y z vl; generalize y; elim vl; simpl in |- *; intros.
+        intros x y z vl; generalize y; elim vl; simpl; intros.
         split with el.
         replace x with y0; auto.
         case (V_in_dec y0 nil); auto.
@@ -218,7 +218,7 @@ Proof.
         case (V_in_dec x (a0 :: l)). intros.
         apply (H a0 x0); auto.
 
-        simpl in |- *. intros. split with el. replace x with y0.
+        simpl. intros. split with el. replace x with y0.
         trivial.
 	
         tauto.
@@ -263,11 +263,11 @@ Proof.
 
         trivial.
 
-        red in |- *; intros; elim n; rewrite H0; simpl in |- *; auto.
+        red; intros; elim n; rewrite H0; simpl; auto.
 
         tauto.
 
-	simpl in |- *. tauto.
+	simpl. tauto.
 
         tauto.
 
@@ -279,16 +279,16 @@ Proof.
 
         trivial.
 
-        red in |- *; intros; elim n; rewrite H0; simpl in |- *; auto.
+        red; intros; elim n; rewrite H0; simpl; auto.
 
         trivial.
 
         intros; absurd (In x0 vl').
-        red in |- *; intros; elim n; simpl in |- *; auto.
+        red; intros; elim n; simpl; auto.
 
         trivial.
 
-        red in |- *; intros.
+        red; intros.
         elim n; inversion H1.
         apply (P_inxyel_inxvl _ _ _ _ _ _ H x0 y0).
         rewrite <- H3; auto.
@@ -356,9 +356,9 @@ Proof.
         split with y1.
         trivial.
 
-        red in |- *; intros.
+        red; intros.
         elim (n1 (E_ends y0 y1)).
-        rewrite <- H13; simpl in |- *; auto.
+        rewrite <- H13; simpl; auto.
 
         rewrite H14; apply E_rev.
 
@@ -375,11 +375,11 @@ Proof.
         simple destruct el0; intros.
         split with x0.
         inversion p0.
-        simpl in |- *; left; trivial.
+        simpl; left; trivial.
 
         elim H; intros.
         split with x1.
-        simpl in |- *; auto.
+        simpl; auto.
 
         discriminate.
 Qed.
@@ -402,7 +402,7 @@ Proof.
         apply (G_non_directed v a g); apply (P_inel_ina v a y0 y vl0 el0 H1);
          trivial.
 
-        red in |- *; intros; elim (H7 (E_ends x1 y)).
+        red; intros; elim (H7 (E_ends x1 y)).
         trivial.
 
         rewrite H12; rewrite H14; apply E_rev.
@@ -610,9 +610,9 @@ Proof.
 
         apply P_step.
         apply H.
-        apply H1; simpl in |- *; auto.
+        apply H1; simpl; auto.
 
-        intros; apply H1; simpl in |- *; auto.
+        intros; apply H1; simpl; auto.
 
         trivial.
 
@@ -641,10 +641,10 @@ Proof.
 
         apply P_step.
         apply H.
-        red in |- *; intros; elim H1.
-        rewrite H2; simpl in |- *; auto.
+        red; intros; elim H1.
+        rewrite H2; simpl; auto.
 
-        red in |- *; intros; elim H1; simpl in |- *; auto.
+        red; intros; elim H1; simpl; auto.
 
         inversion v0.
         inversion H2; absurd (z = x0); auto.
@@ -679,13 +679,13 @@ Proof.
         trivial.
 
         apply (G_ina_inv2 v' a' H0 x0 y0).
-        apply H2; simpl in |- *; auto.
+        apply H2; simpl; auto.
 
-        intros; apply H2; simpl in |- *; auto.
+        intros; apply H2; simpl; auto.
 
         trivial.
 
-        apply H2; simpl in |- *; auto.
+        apply H2; simpl; auto.
 
         trivial.
 
@@ -707,10 +707,10 @@ Proof.
 
         apply P_step.
         apply H.
-        red in |- *; intros; elim H0.
-        simpl in |- *; auto.
+        red; intros; elim H0.
+        simpl; auto.
 
-        red in |- *; intros; elim H1; simpl in |- *; auto.
+        red; intros; elim H1; simpl; auto.
 
         trivial.
 
@@ -719,12 +719,12 @@ Proof.
         absurd (In (E_ends x' y') (E_ends x0 y0 :: el0)).
         trivial.
 
-        rewrite H5; rewrite H6; simpl in |- *; auto.
+        rewrite H5; rewrite H6; simpl; auto.
 
         absurd (In (E_ends y' x') (E_ends x0 y0 :: el0)).
         trivial.
 
-        rewrite H5; rewrite H6; simpl in |- *; auto.
+        rewrite H5; rewrite H6; simpl; auto.
 
         trivial.
 
@@ -749,7 +749,7 @@ Lemma Walk_append :
  Walk v a x y vl el ->
  Walk v a y z vl' el' -> Walk v a x z (vl ++ vl') (el ++ el').
 Proof.
-        intros x y z vl vl' el el' Hw; elim Hw; simpl in |- *; intros.
+        intros x y z vl vl' el el' Hw; elim Hw; simpl; intros.
         trivial.
 
         apply W_step; auto.
@@ -772,7 +772,7 @@ Definition cdr (vl : V_list) : V_list :=
 Lemma cdr_app :
  forall vl vl' : V_list, vl <> V_nil -> cdr (vl ++ vl') = cdr vl ++ vl'.
 Proof.
-        simple induction vl; simpl in |- *; intros.
+        simple induction vl; simpl; intros.
         absurd (V_nil = V_nil); auto.
 
         trivial.
@@ -806,7 +806,7 @@ Lemma Walk_reverse :
  forall (x y : Vertex) (vl : V_list) (el : E_list),
  Walk v a x y vl el -> Walk v a y x (cdr (rev (x :: vl))) (E_reverse el).
 Proof.
-        intros; elim H; simpl in |- *; intros.
+        intros; elim H; simpl; intros.
         apply W_null; trivial.
 
         rewrite cdr_app.
@@ -820,7 +820,7 @@ Proof.
 
         apply (G_non_directed v a g); trivial.
 
-        case (rev vl0); intros; simpl in |- *; discriminate.
+        case (rev vl0); intros; simpl; discriminate.
 Qed.
 
 End REVERSE_WALK.

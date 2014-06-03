@@ -46,10 +46,10 @@ Inductive Connected : V_set -> A_set -> Set :=
 Lemma Connected_not_empty :
  forall (v : V_set) (a : A_set), Connected v a -> v <> V_empty.
 Proof.
-        intros v a c; elim c; red in |- *; intros.
-        elim (V_empty_nothing x); fold V_empty in |- *; rewrite <- H;
+        intros v a c; elim c; red; intros.
+        elim (V_empty_nothing x); fold V_empty; rewrite <- H;
          apply V_in_single.
-        elim (V_empty_nothing y); fold V_empty in |- *; rewrite <- H0;
+        elim (V_empty_nothing y); fold V_empty; rewrite <- H0;
          apply V_in_left; apply V_in_single.
 
         elim H; trivial.
@@ -69,7 +69,7 @@ Proof.
         apply G_vertex.
         exact G_empty.
 
-        compute in |- *. tauto.
+        compute. tauto.
 
         apply G_edge; intros.
         apply G_vertex; trivial.
@@ -78,11 +78,11 @@ Proof.
 
         apply V_in_left; apply V_in_single.
 
-        red in |- *; intros; elim n; rewrite <- H0; trivial.
+        red; intros; elim n; rewrite <- H0; trivial.
 
-        red in |- *; intros; elim n; apply (G_ina_inv2 _ _ H _ _ H0).
+        red; intros; elim n; apply (G_ina_inv2 _ _ H _ _ H0).
 
-        red in |- *; intros; elim n; apply (G_ina_inv1 _ _ H _ _ H0).
+        red; intros; elim n; apply (G_ina_inv1 _ _ H _ _ H0).
 
         apply G_edge; trivial.
 
@@ -198,7 +198,7 @@ Proof.
         split with x1; elim p; intros.
         split with x2;
          apply (Walk_subgraph _ v0 _ (A_union (E_set x y) a0) _ _ _ _ p0).
-        unfold V_included, Included in |- *; auto.
+        unfold V_included, Included; auto.
 
         apply A_included_union'.
 
@@ -271,7 +271,7 @@ Lemma C_pendant_isolated :
  (forall t : Vertex, A_union (E_set x y) a (A_ends z t) -> t = y) ->
  forall t : Vertex, ~ a (A_ends z t).
 Proof.
-        intros; red in |- *; intros; elim H.
+        intros; red; intros; elim H.
         generalize (H0 t); intros.
         rewrite <- H2.
         apply (C_ina_inv2 _ _ c _ _ H1).
@@ -287,7 +287,7 @@ Lemma E_pendant_quasi_isolated :
  v = V_single y.
 Proof.
         intros; apply (C_minus_isolated_left _ _ c y H).
-        red in |- *; intros; elim H0; rewrite <- (H1 y0).
+        red; intros; elim H0; rewrite <- (H1 y0).
         trivial.
 
         apply A_in_right; trivial.
@@ -305,7 +305,7 @@ Lemma E_not_eq_traversal_pendant :
  (forall z : Vertex, A_union (E_set x y) a (A_ends y' z) -> z = x') ->
  E_set x y <> E_set x' y'.
 Proof.
-        intros; red in |- *; intros.
+        intros; red; intros.
         generalize H6; rewrite H7; intros.
         generalize (E_eq_not_in' _ _ _ _ _ H2 H3 H7); intros.
         generalize (E_pendant_quasi_isolated _ _ c x' y' H5 H9 H8); intros.
@@ -328,7 +328,7 @@ Lemma C_minus_pendant :
 Proof.
         intros v a c; elim c; intros.
         elim (A_empty_nothing (A_ends x0 y)).
-        fold A_empty in |- *; rewrite H6; apply A_in_left; apply E_right.
+        fold A_empty; rewrite H6; apply A_in_left; apply E_right.
 
         case (V_union_single_dec _ _ _ n H1) as [e|v2].
         apply C_eq with (v := v0) (a := a0).
@@ -341,7 +341,7 @@ Proof.
 
         generalize (H2 x); rewrite e; intros.
         apply (A_union_inversion (E_set x y)).
-        apply E_set_disjoint; red in |- *; intros.
+        apply E_set_disjoint; red; intros.
         elim n; apply (C_ina_inv2 _ _ co _ _ H9).
 
         elim n; apply (C_ina_inv1 _ _ co _ _ H9).
@@ -351,7 +351,7 @@ Proof.
 
         apply A_in_left; apply E_left.
 
-        fold A_union in |- *; rewrite H7; rewrite e; rewrite H8.
+        fold A_union; rewrite H7; rewrite e; rewrite H8.
         trivial.
 
         apply A_in_left; apply E_left.
@@ -365,8 +365,8 @@ Proof.
         generalize (C_minus_isolated _ _ co y0 v2 H8); intros.
         decompose [and] H9.
         apply C_eq with (v := V_single y) (a := A_empty).
-        symmetry  in |- *; apply (V_union_single_single v' y y0).
-        red in |- *; intros Heq; elim n; rewrite Heq; trivial.
+        symmetry ; apply (V_union_single_single v' y y0).
+        red; intros Heq; elim n; rewrite Heq; trivial.
 
         trivial.
 
@@ -396,19 +396,19 @@ Proof.
         apply (V_union_single_inter y y0).
         trivial.
 
-        red in |- *; intros Heq; elim n; rewrite Heq; trivial.
+        red; intros Heq; elim n; rewrite Heq; trivial.
 
         trivial.
 
         apply (A_union_single_inter x y x0 y0).
-        red in |- *; intros; elim n; apply (C_ina_inv2 _ _ co _ _ H8).
+        red; intros; elim n; apply (C_ina_inv2 _ _ co _ _ H8).
 
-        red in |- *; intros; elim n; apply (C_ina_inv1 _ _ co _ _ H8).
+        red; intros; elim n; apply (C_ina_inv1 _ _ co _ _ H8).
 
         apply E_set_diff2.
-        red in |- *; intros Heq; elim n; rewrite Heq; trivial.
+        red; intros Heq; elim n; rewrite Heq; trivial.
 
-        red in |- *; intros Heq; elim n; rewrite Heq; trivial.
+        red; intros Heq; elim n; rewrite Heq; trivial.
 
         trivial.
 
@@ -417,29 +417,29 @@ Proof.
         intros; apply (H2 z).
         apply A_in_right; trivial.
 
-        red in |- *; intros Hi; elim H3; inversion Hi; trivial.
+        red; intros Hi; elim H3; inversion Hi; trivial.
 
-        symmetry  in |- *; rewrite V_inter_commut;
+        symmetry ; rewrite V_inter_commut;
          apply (V_union_single_inter y0 y).
         trivial.
 
-        red in |- *; intros Heq; elim n; rewrite <- Heq; trivial.
+        red; intros Heq; elim n; rewrite <- Heq; trivial.
 
         auto.
 
-        unfold A_inter in |- *.
+        unfold A_inter.
         rewrite (A_inter_commut a0 a'); apply A_not_inter; trivial.
 
-        unfold A_inter in |- *.
+        unfold A_inter.
         rewrite (A_inter_commut a0 a'); apply A_not_inter; trivial.
 
-        rewrite A_inter_commut; symmetry  in |- *;
+        rewrite A_inter_commut; symmetry ;
          apply (A_union_single_inter x0 y0 x y).
         trivial.
 
         trivial.
 
-        apply E_set_diff4; red in |- *; intros Heq; elim n; rewrite Heq;
+        apply E_set_diff4; red; intros Heq; elim n; rewrite Heq;
          trivial.
 
         auto.
@@ -459,7 +459,7 @@ Proof.
 
         trivial.
 
-        red in |- *; intros Hi; elim n; inversion Hi; trivial.
+        red; intros Hi; elim n; inversion Hi; trivial.
 
         generalize
          (E_not_eq_traversal_pendant _ _ co x y x0 y0 v1 v2 n n0 n1 H0 H1 H2);
@@ -477,13 +477,13 @@ Proof.
 
         trivial.
 
-        unfold A_inter in |- *.
+        unfold A_inter.
         rewrite (A_inter_commut a0 a'); apply A_not_inter; trivial.
 
-        unfold A_inter in |- *.
+        unfold A_inter.
         rewrite (A_inter_commut a0 a'); apply A_not_inter; trivial.
 
-        rewrite A_inter_commut; symmetry  in |- *;
+        rewrite A_inter_commut; symmetry ;
          apply (A_union_single_inter x0 y0 x y); auto.
 
         rewrite H4 in v1; inversion v1.
