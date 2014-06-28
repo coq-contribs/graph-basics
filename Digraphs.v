@@ -70,18 +70,17 @@ Definition D_order (v : V_set) (a : A_set) (d : Digraph v a) :=
 
 Definition D_size (v : V_set) (a : A_set) (d : Digraph v a) :=
   length (DA_list v a d).
-
 Lemma D_v_dec :
  forall (v : V_set) (a : A_set) (d : Digraph v a) (x : Vertex),
  {v x} + {~ v x}.
 Proof.
-        intros v a d; elim d; intros.
+        intros v a d; induction d as [ |v a d H x Hneg| |v v' a a' e ? d H]; intros.
         right; apply V_empty_nothing.
 
-        case (H x0); intros.
+        case (H x0); intros H0.
         left; apply V_in_right; trivial.
 
-        case (V_eq_dec x x0); intros H1. 
+        case (V_eq_dec x x0); intros H1.
         left; apply V_in_left; rewrite H1; apply V_in_single.
 
         right; red; intros H2; inversion H2.
@@ -91,7 +90,7 @@ Proof.
 
         auto.
 
-        case (H x); intros.
+        destruct (H x).
         left; elim e; trivial.
 
         right; elim e; trivial.
