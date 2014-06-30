@@ -104,13 +104,13 @@ Proof.
 
         auto.
 
-        case (H x0); intros.
+        case (H x0); intros H0.
         left; apply A_in_right; trivial.
 
         case (A_eq_dec (A_ends x y) x0); intros H1.
         left; apply A_in_left; rewrite H1; apply A_in_single.
 
-        right; red; intros H2; inversion H2.
+        right; red; intros H2; inversion H2 as [x1 H3|].
         elim H1; inversion H3; trivial.
 
         elim H0; trivial.
