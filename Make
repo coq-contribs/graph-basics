@@ -1,5 +1,6 @@
 -R . GraphBasics
--impredicative-set
+-arg -impredicative-set
+
 Acyclic.v 
 Arcs.v 
 Connected.v 
