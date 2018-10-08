@@ -33,7 +33,7 @@ Require Export Arcs.
 
 Section DIGRAPH.
 
-Inductive Digraph : V_set -> A_set -> Set :=
+Inductive Digraph : V_set -> A_set ->  :=
   | D_empty : Digraph V_empty A_empty
   | D_vertex :
       forall (v : V_set) (a : A_set) (d : Digraph v a) (x : Vertex),

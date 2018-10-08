@@ -28,12 +28,13 @@
 (*      - G_order : number of vertices;                                 *)
 (*      - G_size : number of edges.                                     *)
 
+Add LoadPath "C:\Users\rrb\Documents\graph-basics".
 Require Export Digraphs.
 Require Export Edges.
 
 Section GRAPH.
 
-Inductive Graph : V_set -> A_set -> Set :=
+Inductive Graph : V_set -> A_set -> Type :=
   | G_empty : Graph V_empty A_empty
   | G_vertex :
       forall (v : V_set) (a : A_set) (d : Graph v a) (x : Vertex),
@@ -221,8 +222,8 @@ Proof.
 
         trivial.
 
-        red; intros; inversion_clear H0.
-        inversion H1.
+        red; intros; inversion_clear H.
+        inversion H0.
         elim n; auto.
 
         elim n0; auto.
@@ -238,7 +239,7 @@ Lemma G_union :
  forall (v1 v2 : V_set) (a1 a2 : A_set),
  Graph v1 a1 -> Graph v2 a2 -> Graph (V_union v1 v2) (A_union a1 a2).
 Proof.
-        intros; elim H; intros.
+        intros. elim X. intros.
         apply G_eq with (v := v2) (a := a2).
         symmetry ; apply V_union_neutral.
 
@@ -246,7 +247,7 @@ Proof.
 
         trivial.
 
-        case (G_v_dec v2 a2 H0 x); intros.
+        intros; case (G_v_dec v2 a2 X0 x); intros.
         apply G_eq with (v := V_union v v2) (a := A_union a a2).
         rewrite V_union_assoc; rewrite (V_union_absorb (V_single x)); trivial.
         apply V_included_single; apply V_in_right; trivial.
@@ -267,7 +268,7 @@ Proof.
 
         apply V_not_union; trivial.
 
-        case (G_a_dec v2 a2 H0 (A_ends x y)); intros H2.
+        intros. case (G_a_dec v2 a2 X0 (A_ends x y)); intros H2.
         apply G_eq with (v := V_union v v2) (a := A_union a a2).
         trivial.
 
@@ -275,7 +276,7 @@ Proof.
         apply E_inclusion.
         apply A_in_right; trivial.
 
-        apply A_in_right; apply (G_non_directed v2 a2 H0); auto.
+        apply A_in_right; apply (G_non_directed v2 a2 X0); auto.
 
         trivial.
 
@@ -300,9 +301,9 @@ Proof.
         apply A_not_union.
         trivial.
 
-        red; intro; elim H2; apply (G_non_directed v2 a2 H0); trivial.
+        red; intro; elim H2; apply (G_non_directed v2 a2 X0); trivial.
 
-        apply G_eq with (v := V_union v v2) (a := A_union a a2).
+        intros; apply G_eq with (v := V_union v v2) (a := A_union a a2).
         elim e; trivial.
 
         elim e0; trivial.
@@ -353,87 +354,87 @@ Lemma G_minus_vertex :
  (forall y : Vertex, ~ a (A_ends x y)) ->
  forall v' : V_set, ~ v' x -> v = V_union (V_single x) v' -> Graph v' a.
 Proof.
-intros v a g; elim g; intros.
-elim (V_empty_nothing x); trivial.
+  intros v a g; elim g; intros.
+  elim (V_empty_nothing x); trivial.
 
-case (V_union_single_dec x x0 v0 n H0) as [e|v1].
-apply G_eq with (v := v0) (a := a0).
-apply V_union_inversion with (E := V_single x).
-apply V_single_disjoint; trivial.
+  case (V_union_single_dec x x0 v0 n H) as [e|v1].
+  apply G_eq with (v := v0) (a := a0).
+  apply V_union_inversion with (E := V_single x).
+  apply V_single_disjoint; trivial.
 
-apply V_single_disjoint; rewrite e; trivial.
+  apply V_single_disjoint; rewrite e; trivial.
 
-pattern x at 2; rewrite e; trivial.
+  pattern x at 2; rewrite e; trivial.
 
-trivial.
+  trivial.
 
-trivial.
+  trivial.
 
-generalize (H x0 v1 H1); intros.
-apply G_eq with (v := V_union (V_single x) (V_inter v0 v')) (a := a0).
-apply (V_union_single_inter x x0).
-trivial.
+  generalize (H x0 v1 H1); intros.
+  apply G_eq with (v := V_union (V_single x) (V_inter v0 v')) (a := a0).
+  apply (V_union_single_inter x x0).
+  trivial.
 
-red; intros Heq; elim n; rewrite Heq; trivial.
+  red; intros Heq; elim n; rewrite Heq; trivial.
 
-trivial.
+  trivial.
 
-trivial.
+  trivial.
 
-apply G_vertex.
-apply H4.
-unfold V_inter.
-rewrite (V_inter_commut v0 v'); apply V_not_inter; trivial.
+  apply G_vertex.
+  apply H4.
+  unfold V_inter.
+  rewrite (V_inter_commut v0 v'); apply V_not_inter; trivial.
 
-rewrite V_inter_commut; symmetry ; apply (V_union_single_inter x0 x).
-trivial.
+  rewrite V_inter_commut; symmetry ; apply (V_union_single_inter x0 x).
+  trivial.
 
-red; intros Heq; elim n; rewrite <- Heq; trivial.
+  red; intros Heq; elim n; rewrite <- Heq; trivial.
 
-auto.
+  auto.
 
-apply V_not_inter; trivial.
+  apply V_not_inter; trivial.
 
-apply G_edge.
-apply (H x0).
-trivial.
+  apply G_edge.
+  apply (H x0).
+  trivial.
 
-red; intros; elim (H1 y0).
-apply A_in_right; trivial.
+  red; intros; elim (H1 y0).
+  apply A_in_right; trivial.
 
-trivial.
+  trivial.
 
-trivial.
+  trivial.
 
-rewrite H3 in v1; inversion v1.
-elim (H1 y); inversion H4; apply A_in_left; apply E_right.
+  rewrite H3 in v1; inversion v1.
+  elim (H1 y); inversion H4; apply A_in_left; apply E_right.
 
-trivial.
+  trivial.
 
-rewrite H3 in v2; inversion v2.
-elim (H1 x); inversion H4; apply A_in_left; apply E_left.
+  rewrite H3 in v2; inversion v2.
+  elim (H1 x); inversion H4; apply A_in_left; apply E_left.
 
-trivial.
+  trivial.
 
-trivial.
+  trivial.
 
-trivial.
+  trivial.
 
-trivial.
+  trivial.
 
-apply G_eq with (v := v'0) (a := a0).
-trivial.
+  apply G_eq with (v := v'0) (a := a0).
+  trivial.
 
-trivial.
+  trivial.
 
-apply (H x).
-rewrite e; rewrite H3; apply V_in_left; apply V_in_single.
+  apply (H x).
+  rewrite e; rewrite H3; apply V_in_left; apply V_in_single.
 
-rewrite e0; trivial.
+  rewrite e0; trivial.
 
-trivial.
+  trivial.
 
-rewrite e; trivial.
+  rewrite e; trivial.
 Qed.
 
 Lemma A_union_single_inter :
