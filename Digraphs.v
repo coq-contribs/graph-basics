@@ -33,7 +33,7 @@ Require Export Arcs.
 
 Section DIGRAPH.
 
-Inductive Digraph : V_set -> A_set ->  :=
+Inductive Digraph : V_set -> A_set -> Type :=
   | D_empty : Digraph V_empty A_empty
   | D_vertex :
       forall (v : V_set) (a : A_set) (d : Digraph v a) (x : Vertex),
@@ -129,7 +129,7 @@ Lemma D_union :
  forall (v1 v2 : V_set) (a1 a2 : A_set),
  Digraph v1 a1 -> Digraph v2 a2 -> Digraph (V_union v1 v2) (A_union a1 a2).
 Proof.
-        intros; elim H; intros.
+        intros; elim X; intros.
         apply D_eq with (v := v2) (a := a2).
         symmetry ; apply V_union_neutral.
 
@@ -137,7 +137,7 @@ Proof.
 
         trivial.
 
-        case (D_v_dec v2 a2 H0 x); intros.
+        case (D_v_dec v2 a2 X0 x); intros.
         apply D_eq with (v := V_union v v2) (a := A_union a a2).
         rewrite V_union_assoc; rewrite (V_union_absorb (V_single x)); trivial.
         apply V_included_single; apply V_in_right; trivial.
@@ -158,7 +158,7 @@ Proof.
 
         apply V_not_union; trivial.
 
-        case (D_a_dec v2 a2 H0 (A_ends x y)); intros.
+        case (D_a_dec v2 a2 X0 (A_ends x y)); intros.
         apply D_eq with (v := V_union v v2) (a := A_union a a2).
         trivial.
 
