@@ -42,73 +42,100 @@ Variable U : Set.
 
 Definition U_set := U -> Prop.
 
-Axiom U_set_eq : forall E F : U_set, (forall x : U, E x <-> F x) -> E = F.
+Axiom U_set_eq :
+  forall E F : U_set, (forall x : U, E x <-> F x) -> E = F.
 
-Lemma U_eq_set : forall E F : U_set, E = F -> forall x : U, E x -> F x.
+Lemma U_eq_set :
+  forall E F : U_set, E = F -> forall x : U, E x -> F x.
 Proof.
-        intros; rewrite <- H; trivial.
+  intros E F H0 x H1.
+  rewrite <- H0.
+  trivial.
 Qed.
 
-Lemma U_set_eq_commut : forall E F : U_set, E = F -> F = E.
+Lemma U_set_eq_commut :
+  forall E F : U_set, E = F -> F = E.
 Proof.
-        auto.
+  auto.
 Qed.
 
-Lemma U_set_diff_commut : forall E F : U_set, E <> F -> F <> E.
+Lemma U_set_diff_commut :
+  forall E F : U_set, E <> F -> F <> E.
 Proof.
-        intros; red; intros.
-        elim H; apply U_set_eq_commut; trivial.
+  intros E F H0.
+  red.
+  intros H1.
+  elim H0.
+  apply U_set_eq_commut.
+  trivial.
 Qed.
 
 Inductive Empty : U_set :=.
 
 Inductive Full : U_set :=
-    In_full : forall x : U, Full x.
+  In_full : forall x : U, Full x.
 
 Inductive Single (x : U) : U_set :=
-    In_single : Single x x.
+  In_single : Single x x.
 
-Lemma Single_equal : forall x y : U, Single x y -> x = y.
+Lemma Single_equal :
+  forall x y : U, Single x y -> x = y.
 Proof.
-        intros; inversion H; trivial.
+  intros x y H0.
+  inversion H0.
+  trivial.
 Qed.
 
-Lemma Single_equal_single : forall x y : U, Single x = Single y -> x = y.
+Lemma Single_equal_single :
+  forall x y : U, Single x = Single y -> x = y.
 Proof.
-        intros; generalize (U_eq_set _ _ H x).
-        intros; elim H0.
-        trivial.
-
-        apply In_single.
+  intros x y H0.
+  generalize (U_eq_set _ _ H0 x).
+  intros H1.
+  elim H1.
+  - trivial.
+  - apply In_single.
 Qed.
 
-Lemma Empty_nothing : forall x : U, ~ Empty x.
+Lemma Empty_nothing :
+  forall x : U, ~ Empty x.
 Proof.
-        tauto.
+  tauto.
 Qed.
 
-Lemma U_set_diff : forall E F : U_set, (exists x : U, E x /\ ~ F x) -> E <> F.
+Lemma U_set_diff :
+  forall E F : U_set, (exists x : U, E x /\ ~ F x) -> E <> F.
 Proof.
-        intros; red; intros.
-        elim H; intros.
-        elim H1; intros.
-        elim H3; rewrite <- H0; auto.
+  intros E F H0.
+  red.
+  intros H1.
+  elim H0.
+  intros x H2.
+  elim H2.
+  intros H3 H4.
+  elim H4.
+  rewrite <- H1.
+  auto.
 Qed.
 
-        Section INCLUSION.
+Section INCLUSION.
 
-Definition Included (E F : U_set) : Prop := forall x : U, E x -> F x.
+Definition Included (E F : U_set) :
+  Prop := forall x : U, E x -> F x.
 
 Lemma Included_single :
  forall (E : U_set) (x : U), E x -> Included (Single x) E.
 Proof.
-        unfold Included; intros.
-        inversion H0; rewrite <- H1; trivial.
+  unfold Included.
+  intros E x0 H0 x1 H1.
+  inversion H1.
+  rewrite <- H.
+  trivial.
 Qed.
 
-        End INCLUSION.
+End INCLUSION.
 
-        Section UNION.
+Section UNION.
 
 Inductive Union (E F : U_set) : U_set :=
   | In_left : forall x : U, E x -> Union E F x
@@ -117,48 +144,69 @@ Inductive Union (E F : U_set) : U_set :=
 Lemma Union_eq :
  forall E F E' F' : U_set, E = E' -> F = F' -> Union E F = Union E' F'.
 Proof.
-        intros; elim H.
-        elim H0; trivial.
+  intros E F E' F' H0 H1.
+  elim H0.
+  elim H1.
+  trivial.
 Qed.
 
-Lemma Union_neutral : forall e : U_set, Union Empty e = e.
+Lemma Union_neutral :
+  forall e : U_set, Union Empty e = e.
 Proof.
-        intros; apply U_set_eq; split; intros.
-        inversion H.
-        inversion H0.
-
-        trivial.
-
-        apply In_right; trivial.
+  intros e.
+  apply U_set_eq.
+  split.
+  - intros H.
+    inversion H.
+    inversion H0.
+    trivial.
+  - apply In_right.
 Qed.
 
-Lemma Union_commut : forall e1 e2 : U_set, Union e1 e2 = Union e2 e1.
+Lemma Union_commut :
+  forall e1 e2 : U_set, Union e1 e2 = Union e2 e1.
 Proof.
-        intros; apply U_set_eq; split; intros.
-        inversion H; [ apply In_right | apply In_left ]; trivial.
-
-        inversion H; [ apply In_right | apply In_left ]; trivial.
+  intros.
+  apply U_set_eq.
+  split.
+  - intros H.
+    inversion H.
+    + apply In_right. trivial.
+    + apply In_left. trivial.
+  - intros H.
+    inversion H.
+    + apply In_right. trivial.
+    + apply In_left. trivial.
 Qed.
 
 Lemma Union_assoc :
  forall e1 e2 e3 : U_set, Union (Union e1 e2) e3 = Union e1 (Union e2 e3).
 Proof.
-        intros; apply U_set_eq; split; intros.
-        inversion H.
-        inversion H0.
-        apply In_left; trivial.
-
-        apply In_right; apply In_left; trivial.
-
-        apply In_right; apply In_right; trivial.
-
-        inversion H.
-        apply In_left; apply In_left; trivial.
-
-        inversion H0.
-        apply In_left; apply In_right; trivial.
-
-        apply In_right; trivial.
+  intros e1 e2 e3.
+  apply U_set_eq.
+  split.
+  - intros H.
+    inversion H.
+    + inversion H0.
+      * apply In_left.
+        trivial.
+      * apply In_right.
+        apply In_left.
+        trivial.
+    + apply In_right.
+      apply In_right.
+      trivial.
+  - intros H.
+    inversion H.
+    + apply In_left.
+      apply In_left.
+      trivial.
+    + inversion H0.
+      * apply In_left.
+        apply In_right.
+        trivial.
+      * apply In_right.
+        trivial.
 Qed.
 
 Lemma Not_union :
