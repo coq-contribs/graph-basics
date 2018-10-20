@@ -9,7 +9,6 @@ and programs on graphs in the same formalism : the Coq language.
 It now contains : vertices, arcs, edges, degrees, graphs, directed
 graphs,
 paths, acyclic graphs, connected graphs and tree.
-Keywords : graph theory, Curry-Howard's isomorphism, inductive
-definitions
+Keywords : graph theory, Curry-Howard's isomorphism, inductive definitions
 Require :
 Category: Mathematics/Combinatorics and Graph Theory
