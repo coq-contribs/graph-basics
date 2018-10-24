@@ -662,6 +662,7 @@ Proof.
         trivial.
 Qed.
 
+(*
 Lemma Path_supergraph_arc :
  forall (v v' : V_set) (a a' : A_set) (x y : Vertex) 
    (vl : V_list) (el : E_list),
@@ -695,6 +696,7 @@ Proof.
 
         trivial.
 Qed.
+*)
 
 Lemma Path_supergraph_cons_arc :
  forall (v : V_set) (a : A_set) (x y x' y' : Vertex) 

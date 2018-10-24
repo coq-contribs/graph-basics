@@ -26,7 +26,7 @@ Require Export Graphs.
 
 Section CONNECTED.
 
-Inductive Connected : V_set -> A_set -> Set :=
+Inductive Connected : V_set -> A_set -> Type :=
   | C_isolated : forall x : Vertex, Connected (V_single x) A_empty
   | C_leaf :
       forall (v : V_set) (a : A_set) (co : Connected v a) (x y : Vertex),
@@ -57,6 +57,7 @@ Proof.
         elim H; rewrite e; trivial.
 Qed.
 
+(*
 Lemma Connected_Isa_Graph :
  forall (v : V_set) (a : A_set), Connected v a -> Graph v a.
 Proof.
@@ -118,6 +119,7 @@ Lemma C_ina_inv2 :
 Proof.
         intros; apply (G_ina_inv2 v a (Connected_Isa_Graph v a c) x y H).
 Qed.
+*)
 
 End CONNECTED.
 
@@ -265,6 +267,7 @@ Proof.
         intros; elim (C_minus_isolated v a c x); auto.
 Qed.
 
+(*
 Lemma C_pendant_isolated :
  forall (v : V_set) (a : A_set) (c : Connected v a) (x y z : Vertex),
  ~ v y ->
@@ -278,6 +281,7 @@ Proof.
 
         apply A_in_right; trivial.
 Qed.
+*)
 
 Lemma E_pendant_quasi_isolated :
  forall (v : V_set) (a : A_set) (c : Connected v a) (x y : Vertex),
@@ -315,6 +319,7 @@ Proof.
         rewrite <- H11; trivial.
 Qed.
 
+(*
 Lemma C_minus_pendant :
  forall (v : V_set) (a : A_set) (c : Connected v a) (x y : Vertex),
  v x ->
@@ -527,5 +532,6 @@ Proof.
 
         rewrite e0; trivial.
 Qed.
+*)
 
 End INVERSION_CONNECTED.

@@ -21,7 +21,7 @@ Require Export Paths.
 
 Section ACYCLIC.
 
-Inductive Acyclic : V_set -> A_set -> Set :=
+Inductive Acyclic : V_set -> A_set -> Type :=
   | AC_empty : Acyclic V_empty A_empty
   | AC_vertex :
       forall (v : V_set) (a : A_set) (ac : Acyclic v a) (x : Vertex),
@@ -34,6 +34,7 @@ Inductive Acyclic : V_set -> A_set -> Set :=
       forall (v v' : V_set) (a a' : A_set),
       v = v' -> a = a' -> Acyclic v a -> Acyclic v' a'.
 
+(*
 Lemma Acyclic_Isa_Graph :
  forall (v : V_set) (a : A_set), Acyclic v a -> Graph v a.
 Proof.
@@ -75,11 +76,13 @@ Proof.
          apply (G_ina_inv2 v a (Acyclic_Isa_Graph v a ac) x y); 
          trivial.
 Qed.
+*)
 
 End ACYCLIC.
 
 Section ACYCLIC_AND_DEGREES.
 
+(*
 Remark AC_vertex_isolated :
  forall (v : V_set) (a : A_set) (x : Vertex),
  Acyclic v a ->
@@ -99,7 +102,9 @@ Proof.
         red; intros; elim Hn.
         apply AC_ina_inv1 with (a := a) (y := y); trivial.
 Qed.
+*)
 
+(*
 Remark AC_edge_pendant :
  forall (v : V_set) (a : A_set) (x y : Vertex),
  Acyclic v a ->
@@ -136,12 +141,14 @@ Proof.
 
         apply AC_ina_inv1 with (a := a) (y := z); trivial.
 Qed.
+*)
 
 Remark one_le_one : forall n : nat, n = 1 -> n <= 1.
 Proof.
         intros; omega.
 Qed.
 
+(*
 Lemma Acyclic_no_cycle :
  forall (v : V_set) (a : A_set) (Ac : Acyclic v a) 
    (x y : Vertex) (vl : V_list) (el : E_list) (p : Path v a x y vl el),
@@ -210,5 +217,6 @@ Proof.
         generalize H; rewrite e; rewrite e0; intros.
         apply (H1 _ _ _ _ p H0).
 Qed.
+*)
 
 End ACYCLIC_AND_DEGREES.

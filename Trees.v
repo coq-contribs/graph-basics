@@ -21,7 +21,7 @@ Require Export Connected.
 
 Section TREE.
 
-Inductive Tree : V_set -> A_set -> Set :=
+Inductive Tree : V_set -> A_set -> Type :=
   | T_root : forall r : Vertex, Tree (V_single r) A_empty
   | T_leaf :
       forall (v : V_set) (a : A_set) (t : Tree v a) (f n : Vertex),
@@ -30,6 +30,7 @@ Inductive Tree : V_set -> A_set -> Set :=
       forall (v v' : V_set) (a a' : A_set),
       v = v' -> a = a' -> Tree v a -> Tree v' a'.
 
+(*
 Lemma Tree_isa_graph : forall (v : V_set) (a : A_set), Tree v a -> Graph v a.
 Proof.
         intros v a t; elim t; intros.
@@ -59,6 +60,7 @@ Proof.
 
         apply G_eq with (v := v0) (a := a0); trivial.
 Defined.
+*)
 
 Lemma Tree_isa_connected :
  forall (v : V_set) (a : A_set), Tree v a -> Connected v a.
@@ -94,6 +96,7 @@ End TREE.
 
 Section CONNECTED_AND_ACYCLIC.
 
+(*
 Lemma Acyclic_connected_isa_tree :
  forall (v : V_set) (a : A_set), Acyclic v a -> Connected v a -> Tree v a.
 Proof.
@@ -149,5 +152,6 @@ Proof.
 
         apply H; apply C_eq with (v := v') (a := a'); auto.
 Qed.
+*)
 
 End CONNECTED_AND_ACYCLIC.

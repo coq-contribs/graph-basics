@@ -1,0 +1,32 @@
+digraph G {
+    Sets -> Enumerated;
+    Enumerated -> Vertices;
+    Vertices -> Arcs;
+    Arcs -> Edges;
+    Arcs -> Digraphs;
+    Edges -> Graphs;
+    Digraphs -> Dipaths;
+    Digraphs -> Graphs;
+    Graphs -> Connected;
+    Graphs -> Paths;
+    Paths -> Connected;
+    Graphs -> Degrees;
+    Degrees -> Paths;
+    Paths -> Acyclic;
+    Connected -> Trees;
+    Acyclic -> Trees;
+    
+    Sets [shape=Square];
+    Enumerated [shape=Square];
+    Vertices [shape=Square];
+    Arcs [shape=Square];
+    Edges [shape=Square];
+    Digraphs [shape=Square];
+    Dipaths [shape=Square];
+    Graphs [shape=Square];
+    Connected [shape=Square];
+    Degrees [shape=Square];
+    Paths [shape=Square];
+    Acyclic [shape=Square];
+    Trees [shape=Square];
+}
