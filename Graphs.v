@@ -348,6 +348,7 @@ Proof.
         auto.
 Qed.
 
+(*
 Lemma G_minus_vertex :
  forall (v : V_set) (a : A_set) (g : Graph v a) (x : Vertex),
  v x ->
@@ -436,6 +437,7 @@ Proof.
 
   rewrite e; trivial.
 Qed.
+*)
 
 Lemma A_union_single_inter :
  forall (x y x' y' : Vertex) (a a' : A_set),
@@ -456,6 +458,7 @@ Proof.
         auto.
 Qed.
 
+(*
 Lemma G_minus_edge :
  forall (v : V_set) (a : A_set) (g : Graph v a) (x y : Vertex),
  a (A_ends x y) ->
@@ -538,5 +541,6 @@ trivial.
 
 rewrite e0; trivial.
 Qed.
+*)
 
 End INVERSION_GRAPH.
